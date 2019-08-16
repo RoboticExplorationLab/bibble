@@ -86,6 +86,12 @@ def _title(entry):
     title = title.replace('{','').replace('}','')
     return title
 
+def _note(entry):
+    # remove pubs-journal and pubs-conference
+    note = entry
+    note = note.replace('pubs-journal','').replace('pubs-conference','').replace('pubs-other','')
+    return note 
+
 
 def _main_url(entry):
     urlfields = ('url', 'ee')
@@ -151,6 +157,7 @@ def main(bibfile, template, output):
     tenv.filters['main_url'] = _main_url
     tenv.filters['extra_urls'] = _extra_urls
     tenv.filters['monthname'] = _month_name
+    tenv.filters['note'] = _note
     tmpl = tenv.from_string(template.read())
 
     # Parse the BibTeX file.
